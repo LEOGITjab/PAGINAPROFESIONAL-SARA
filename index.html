@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Amo estar cerca de ti ❤</title>
+</head>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, rgb(255, 175, 188), rgb(169, 216, 232));
+    display: flex;
+    justify-content:start;
+    align-items:self-start;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    margin-right: 0;
+
+}
+
+.audio-player {
+    display: flex;
+    align-items: center;
+    background-color: rgb(255, 176, 190);
+    padding: 15px;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100px;
+    margin-left: 20px;
+    margin-top: 20px;
+    position: absolute;
+    z-index: 10;
+}
+
+
+button {
+    background-color: #ff86c0;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    position: relative;
+}
+
+button.play::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 15px solid #fff7fc;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    margin-left: 13px;
+}
+
+button.pause::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 20px;
+    background-color: #fff7fc;
+    margin-left: 12px;
+    position: relative;
+    left: 2px;
+}
+
+.progress-bar {
+    background-color: #ffb1ef;
+    height: 5px;
+    flex-grow: 1;
+    margin: 0 15px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    background-color: #ac53b4;
+    height: 100%;
+    width: 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.elemento {
+    position: absolute;
+    bottom: -100px; /* Comienza fuera de la pantalla */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: moverArriba 5s linear infinite;
+    
+}
+
+.elemento img {
+    width: 0; /* Ajusta el tamaño de la imagen según tus necesidades */
+    height: px;
+}
+
+/* Animación para mover los elementos hacia arriba */
+@keyframes moverArriba {
+    0% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+.letras {
+    width: 100vw;
+    height: 100vh;
+    position:absolute;
+    text-align: center;
+    margin-top: 150px;
+    font-family: 'sweetheart.ttf', sans-serif;
+    font-size: 40px;
+    color: #ee43e3;
+}
+
+@font-face {
+    font-family: 'saraletra.ttf';
+    src: url(saraletra.TTF) format('truetype');
+}
+
+@font-face {
+    font-family: 'sweetheart.ttf' ;
+    src: url(Sweetheart-Regular.ttf) format('truetype');
+}
+
+.sara {
+    font-family: 'saraletra.ttf', sans-serif;
+    font-size: 80px;
+    color: rgb(255, 255, 158);
+    z-index: 100;
+}
+</style>
+
+<body>
+    <div class="audio-player">
+        <button id="play-pause" class="play" aria-label="Play"></button>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <audio autoplay loop id="audio" src="Carpenter_close_to_you.mp3"></audio>
+    </div>
+
+    <div class="letras">
+        <h2>Felizz 8 mesesitoss</h2>
+        <h2 class="sara">SARA</h2>
+    </div>
+
+    <div class="container">
+        <div class="elemento"><img src="mariposacrack.png" alt="mariposacrack"></div>
+        <div class="elemento"><img src="muchoscoraazonnes.png" alt="muchoscoraazonnes"></div>
+        <div class="elemento"><img src="corazonnn.png" alt="corazonnn"></div>
+        <div class="elemento"><img src="rosasdf.png" alt="rosasdf"></div>
+        <div class="elemento"><img src="corazonnrosa.png" alt="corazonnrosa"></div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playPauseButton = document.getElementById('play-pause');
+        const progressBar = document.querySelector('.progress');
+        
+        playPauseButton.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseButton.classList.remove('play');
+                playPauseButton.classList.add('pause');
+                playPauseButton.setAttribute('aria-label', 'Pause');
+            } else {
+                audio.pause();
+                playPauseButton.classList.remove('pause');
+                playPauseButton.classList.add('play');
+                playPauseButton.setAttribute('aria-label', 'Play');
+            }
+        });
+        
+        audio.addEventListener('timeupdate', () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = progress + '%';
+        });
+        
+        audio.addEventListener('ended', () => {
+            playPauseButton.classList.remove('pause');
+            playPauseButton.classList.add('play');
+            progressBar.style.width = '0%';
+        });
+    
+        // Función para crear un nuevo elemento de mariposa, flor o rosa
+        function crearElemento() {
+                const contenedor = document.querySelector('.container');
+                const nuevoElemento = document.createElement('div');
+                nuevoElemento.classList.add('elemento');
+                
+                const img = document.createElement('img');
+                const tipo = Math.floor(Math.random() * 5); // Escoge entre mariposa, rosa, o flor
+        
+                switch(tipo) {
+                    case 0:
+                        img.src = 'mariposacrack.png';
+                        img.alt = 'mariposacrack';
+                        break;
+                    case 1:
+                        img.src = 'muchoscoraazonnes.png';
+                        img.alt = 'muchoscoraazonnes';
+                        break;
+                    case 2:
+                        img.src = 'corazonnn.png';
+                        img.alt = 'corazonnn';
+                        break;
+                    case 3:
+                        img.src = 'rosasdf.png';
+                        img.alt = 'rodasdf';
+                        break;
+                    case 4:
+                        img.src = 'corazonnrosa.png';
+                        img.alt = 'corazonnrosa';
+                        break;
+        
+                }
+        
+                img.style.width = Math.floor(Math.random() * 30 + 70) + 'px'; // Tamaño aleatorio
+                nuevoElemento.style.left = Math.floor(Math.random() * 100) + 'vw'; // Posición aleatoria
+                nuevoElemento.style.animationDuration = Math.floor(Math.random() * 5 + 10) + 's'; // Duración aleatoria
+        
+                nuevoElemento.appendChild(img);
+                contenedor.appendChild(nuevoElemento);
+        
+                 // Remover el elemento cuando termine la animación
+                setTimeout(() => {
+                    contenedor.removeChild(nuevoElemento);
+                }, 10000); // 10 segundos
+            }
+        
+            // Crear un nuevo elemento cada segundo
+    setInterval(crearElemento, 200);
+    </script>
+    
+</body>
+</html>
+
